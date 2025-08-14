@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My Awards</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background-color: #000;
+      color: #fff;
+      overflow-x: hidden;
+    }
+
+    video {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
+    }
+
+    .top-nav {
+      background: rgba(0, 0, 0, 0.7);
+      padding: 15px;
+      text-align: center;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .top-nav a {
+      background: #222;
+      color: white;
+      padding: 10px 18px;
+      margin: 0 10px;
+      text-decoration: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      transition: background 0.3s ease, transform 0.2s;
+      display: inline-block;
+    }
+
+    .top-nav a:hover {
+      background: #555;
+      transform: scale(1.05);
+    }
+
+    header {
+      text-align: center;
+      padding: 40px 20px;
+      background-color: rgba(0, 0, 0, 0.6);
+    }
+
+    /* Entry Animation */
+    .animate-entry {
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeInSlide 1.2s ease forwards;
+    }
+
+    @keyframes fadeInSlide {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .main-box {
+      width: 95%;
+      margin: 30px auto;
+      padding: 30px;
+      border: 4px solid white;
+      border-radius: 12px;
+      background-color: rgba(255, 255, 255, 0.05);
+    }
+
+    fieldset {
+      border: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .gallery {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .award-item {
+      width: 100%;
+      max-width: 900px;
+      text-align: center;
+      background-color: rgba(255, 255, 255, 0.05);
+      border: 2px solid #fff;
+      border-radius: 10px;
+      padding: 20px;
+      display: none;
+      opacity: 0;
+      transition: opacity 0.6s ease;
+    }
+
+    .award-item.active {
+      display: block;
+      opacity: 1;
+    }
+
+    .award-img {
+      width: 100%;
+      max-height: 500px;
+      object-fit: cover;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .award-img:hover {
+      transform: scale(1.03);
+    }
+
+    .award-caption {
+      font-weight: bold;
+      font-size: 1.2rem;
+      margin-top: 15px;
+    }
+
+    .award-description {
+      font-size: 1rem;
+      margin-top: 10px;
+      color: #ddd;
+      line-height: 1.6;
+    }
+
+    .nav-buttons {
+      margin-top: 20px;
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+    }
+
+    .nav-buttons button {
+      padding: 10px 20px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 8px;
+      background-color: #444;
+      color: white;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .nav-buttons button:hover {
+      background-color: #777;
+    }
+
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 999;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.95);
+    }
+
+    .modal-content {
+      margin: 5% auto;
+      display: block;
+      max-width: 90%;
+      max-height: 80vh;
+      border-radius: 12px;
+      transition: transform 0.4s ease-in-out, opacity 0.4s ease;
+      transform: scale(0.8);
+      opacity: 0;
+    }
+
+    .modal.show .modal-content {
+      transform: scale(1);
+      opacity: 1;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      font-size: 40px;
+      color: white;
+      cursor: pointer;
+    }
+
+    .modal-close:hover {
+      color: red;
+    }
+
+    .modal-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 50px;
+      color: white;
+      cursor: pointer;
+      user-select: none;
+      padding: 10px;
+    }
+
+    .modal-nav.left {
+      left: 30px;
+    }
+
+    .modal-nav.right {
+      right: 30px;
+    }
+
+    footer {
+      text-align: center;
+      margin: 30px 0;
+    }
+  </style>
+</head>
+<body>
+
+<video autoplay muted loop playsinline>
+  <source src="C:\Users\KYLE\OneDrive\Documents\ABOUT ME\codes background.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+
+<div class="top-nav">
+  <a href="portfolio.html">🏠 Home</a>
+  <a href="gallery.html">📷 Photo Gallery</a>
+  <a href="friends.html">👥 Friends</a>
+  <a href="awards.html">🏅 Awards</a>
+  <a href="hobbies.html">🎧 Hobbies</a>
+</div>
+
+<header>
+  <h1>My Awards</h1>
+  <p>Here are some of the awards I've received!</p>
+</header>
+
+<!-- Add animate-entry here -->
+<div class="main-box animate-entry">
+  <fieldset>
+    <div class="gallery" id="awardGallery">
+
+      <div class="award-item active">
+        <img src="C:\Users\KYLE\Downloads\Portfolio FINALS\Adriel Kyle Casili (1).PNG" alt="Award 1" class="award-img" onclick="openImage(this.src)">
+        <div class="award-caption">INNOVATION IN IOT FOR SMART APPLICATIONS</div>
+        <p class="award-description">This award recognizes my contribution to developing innovative solutions using Internet of Things (IoT) technologies for smart applications.</p>
+      </div>
+
+      <div class="award-item">
+        <img src="C:\Users\KYLE\OneDrive\Documents\ABOUT ME\Certi.png" alt="Award 2" class="award-img" onclick="openImage(this.src)">
+        <div class="award-caption">BLOCKCHAIN CLUB PRESENTATION</div>
+        <p class="award-description">Presented a session on Blockchain fundamentals and applications, contributing to the university's tech community growth and awareness.</p>
+      </div>
+
+      <div class="award-item">
+        <img src="C:\Users\KYLE\Downloads\Kyle Casili.PNG" alt="Award 3" class="award-img" onclick="openImage(this.src)">
+        <div class="award-caption">MODERN TECHNOLOGY OF PARALLEL & DISTRIBUTED PROGRAMMING</div>
+        <p class="award-description">Achieved this recognition after attending a webinar on distributed systems and parallel computing techniques.</p>
+      </div>
+
+      <div class="award-item">
+        <img src="C:\Users\KYLE\OneDrive\Documents\ABOUT ME\Ml Award.jpg" alt="Award 4" class="award-img" onclick="openImage(this.src)">
+        <div class="award-caption">MOBILE LEGENDS AWARD</div>
+        <p class="award-description">SPRY AND PRAY Squad achieved this certificate after winning 2nd place in the Mobile Legends CSS Week tournament event.</p>
+      </div>
+
+    </div>
+
+    <div class="nav-buttons">
+      <button onclick="showPrev()">⟵ Previous</button>
+      <button onclick="showNext()">Next ⟶</button>
+    </div>
+  </fieldset>
+</div>
+
+<!-- Modal -->
+<div id="imageModal" class="modal">
+  <span class="modal-close" onclick="closeImage()">&times;</span>
+  <span class="modal-nav left" onclick="showPrev()">&#10094;</span>
+  <img id="modalImage" class="modal-content" src="">
+  <span class="modal-nav right" onclick="showNext()">&#10095;</span>
+</div>
+
+<footer>
+  <p>Click on the images to view them in full size.</p>
+</footer>
+
+<script>
+  const modal = document.getElementById('imageModal');
+  const modalImg = document.getElementById('modalImage');
+  const awards = document.querySelectorAll('.award-item');
+  let currentIndex = 0;
+
+  function openImage(src) {
+    modal.style.display = "block";
+    modal.classList.add("show");
+    modalImg.src = src;
+
+    awards.forEach((item, index) => {
+      const img = item.querySelector('img');
+      if (img.src === src) {
+        currentIndex = index;
+      }
+    });
+  }
+
+  function closeImage() {
+    modal.classList.remove("show");
+    setTimeout(() => {
+      modal.style.display = "none";
+      modalImg.src = "";
+    }, 200);
+  }
+
+  modal.addEventListener('click', function (event) {
+    if (event.target === modal || event.target.classList.contains('modal-close')) {
+      closeImage();
+    }
+  });
+
+  function showAward(index) {
+    awards.forEach((item) => item.classList.remove('active'));
+    awards[index].classList.add('active');
+  }
+
+  function showNext() {
+    currentIndex = (currentIndex + 1) % awards.length;
+    showAward(currentIndex);
+    modalImg.src = awards[currentIndex].querySelector('img').src;
+  }
+
+  function showPrev() {
+    currentIndex = (currentIndex - 1 + awards.length) % awards.length;
+    showAward(currentIndex);
+    modalImg.src = awards[currentIndex].querySelector('img').src;
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (modal.style.display === "block") {
+      if (e.key === "ArrowRight") {
+        showNext();
+      } else if (e.key === "ArrowLeft") {
+        showPrev();
+      }
+    }
+  });
+</script>
+
+</body>
+</html>
